@@ -9,6 +9,7 @@ import {
   getAudioSrc,
 } from "./general/audioEssentials";
 import { getTilesLength } from "./utils/utils";
+import { updateByCategory } from "./utils/utils";
 import {
   addAllNavbarAnimations,
   addAllNavbarFunctionality,
@@ -18,11 +19,8 @@ import { isExistingLevel } from "./utils/validate";
 import { incrementDifficulty } from "./utils/utils";
 import { onAuthStateChanged } from "firebase/auth";
 import {
-  arrayUnion,
   doc,
   getDoc,
-  increment,
-  updateDoc,
 } from "firebase/firestore";
 
 import { Modal } from "bootstrap";
@@ -80,12 +78,11 @@ const diff = urlParams.get("diff");
 const levelURL = urlParams.get("level");
 
 const content = document.getElementById("content");
-const subtitle = document.getElementById("subtitle")
+const subtitle = document.getElementById("subtitle");
 
 let isWinner = false;
 
 let challenge = {};
-
 
 // -------------------------------------
 
@@ -106,7 +103,7 @@ export const getDiffRef = (diffString) => {
 async function codeEditor() {
   await isExistingLevel(cat, diff, levelURL);
   await isUserUnlockedLevel(cat, diff, levelURL);
-  
+
   challenge = await getChallenge(cat, levelURL, diff);
   content.innerHTML = challenge.content;
 
@@ -119,8 +116,8 @@ async function codeEditor() {
     fontSize: "15pt",
   });
 
-  editor.setValue(beautify(challenge.javaCode)); 
- 
+  editor.setValue(beautify(challenge.javaCode));
+
   document.getElementById("run").addEventListener("click", async function () {
     let code = editor.getValue();
     let input = document.getElementById("inputArea").value;
@@ -136,7 +133,7 @@ async function codeEditor() {
       return;
     }
 
-  /*   response = await codeCompilerAPI(code, input); // 2nd API call (4000rq / month | 10rq / second | 3,502ms delay)
+    /*   response = await codeCompilerAPI(code, input); // 2nd API call (4000rq / month | 10rq / second | 3,502ms delay)
     if (response) {
       console.log("codeCompilerAPI");
       document.getElementById("ans").innerHTML = response.output;
@@ -159,8 +156,6 @@ async function codeEditor() {
       isWinner = validateAnswer(code);
       return;
     }
-
-
   });
 
   // https://rapidapi.com/onecompiler-onecompiler-default/api/onecompiler-apis
@@ -576,7 +571,7 @@ function createGame(userSkin) {
     let canvas = document.getElementById("gameCanvas");
 
     // start
-  /*   if (
+    /*   if (
       cursorKeys.ENTER.isDown &&
       !buttonPressedSpace &&
       index == 1 &&
@@ -592,8 +587,7 @@ function createGame(userSkin) {
     //check if winner
     if (isWinner) {
       canvas.focus();
-      if (isWinner == true && index == 1 &&
-        document.activeElement == canvas) {
+      if (isWinner == true && index == 1 && document.activeElement == canvas) {
         player.setPosition(player.x, player.y + tileSize);
         isWinner = false;
       }
@@ -603,7 +597,7 @@ function createGame(userSkin) {
     if (cursorKeys.ENTER.isDown) {
       // Reset the flag when the button is released
       buttonPressedSpace = false;
-    } 
+    }
 
     // reset
     if (
@@ -797,7 +791,6 @@ function createGame(userSkin) {
 
 //let playerReward = 15;
 
-
 const levelCompleteModal = new Modal(
   document.getElementById("levelCompleteModal"),
   {}
@@ -817,7 +810,6 @@ function levelComplete() {
   rewardPlayer(getPlayerReward(diff), getLvlString(diff, levelURL));
 }
 
-
 async function getNextLevel() {
   if (parseInt(await getTilesLength(cat, diff)) === parseInt(levelURL)) {
     //proceed to another difficulty and back to level 1
@@ -830,58 +822,55 @@ async function getNextLevel() {
     let newDiff = incrementDifficulty(diff);
     let newLevel = 1;
     return `play.html?cat=${cat}&diff=${newDiff}&level=${newLevel}`;
-
-    
-    
   }
-  return `play.html?cat=${cat}&diff=${diff}&level=${String(parseInt(levelURL)+1)}`;
+  return `play.html?cat=${cat}&diff=${diff}&level=${String(
+    parseInt(levelURL) + 1
+  )}`;
 }
 
 document
   .getElementById("nextLevelButton")
   .addEventListener("click", async function () {
-    
     let nextlevel = await getNextLevel();
     console.log(nextlevel);
     location.href = nextlevel;
   });
 
-  document
-    .getElementById("nextLevelButton2")
-    .addEventListener("click", async function () {
-      let nextlevel = await getNextLevel();
-       console.log(nextlevel);
-      location.href = nextlevel;
-    });
+document
+  .getElementById("nextLevelButton2")
+  .addEventListener("click", async function () {
+    let nextlevel = await getNextLevel();
+    console.log(nextlevel);
+    location.href = nextlevel;
+  });
 
-document.getElementById("continueButton").addEventListener("click", function () {
-  levelFailedModal.toggle();
-});
+document
+  .getElementById("continueButton")
+  .addEventListener("click", function () {
+    levelFailedModal.toggle();
+  });
 
 async function rewardPlayer(amount, level) {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-       const userRef = doc(db, "users", user.uid);
-       const docSnap = await getDoc(userRef);
+      const userRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(userRef);
       if (docSnap.exists()) {
         const completedLevels = await getCompletedLevels(docSnap, cat);
         if (!completedLevels.includes(getLvlString(diff, levelURL))) {
-           await updateDoc(userRef, {
-             completedLevels2: arrayUnion(level),
-             points: increment(amount),
-           })
-           levelCompleteModal.toggle();
-           document.getElementById("loading_gif").style.display = "none";
-           document.getElementById("nextLevelButton").style.display = "block";
+          await updateByCategory(userRef, level, amount, cat);
+          levelCompleteModal.toggle();
+          document.getElementById("loading_gif").style.display = "none";
+          document.getElementById("nextLevelButton").style.display = "block";
         } else {
           //Insert modal level already completed
           AlreadyCompletedModal.toggle();
           //
-           document.getElementById("loading_gif").style.display = "none";
-           document.getElementById("nextLevelButton").style.display = "block";
+          document.getElementById("loading_gif").style.display = "none";
+          document.getElementById("nextLevelButton").style.display = "block";
         }
       }
-    } 
+    }
     /* if (user) {
       const uid = user.uid;
       const userRef = doc(db, "users", uid);
