@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CodeExpresso</title>
+    
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+    <link rel="manifest" href="../favicon/site.webmanifest">
+    <link rel="mask-icon" href="../favicon/safari-pinned-tab.svg" color="#5bbad5">
+
+  </head>
+  <body>
+    <!-- toast -->
+    <div id="toastsContainer" style="position: fixed; top: 8rem; right: 0; z-index:200;">
+      
+    </div>
+
+    <!-- audio -->
+    <div id="audioContainer" style="display:none";>
+
+    </div>
+    
+    <!-- Settings Modal -->
+    <div class="modal fade custom" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h3 class="modal-title" id="exampleModalLongTitle">Settings</h3>
+          </div>
+          <div class="modal-body border-0">
+            <h4 style="margin-bottom: 1rem;">Music</h4>
+            <div class="d-flex justify-content-center">
+              <input class="nes-pointer" id="musicVolume" type="range" min="0" max="100" step="1" value="90" style="margin-bottom: 2rem;"/>
+            </div>
+            
+            <h4 style="margin-bottom: 1rem;">Sound Effects</h4>
+            <div class="d-flex justify-content-center">
+              <input class="nes-pointer" id="sfxVolume" type="range" min="0" max="100" step="1" value="getVolume('CESFXvolume')" style="margin-bottom: 1rem;"/>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="nes-btn is-primary nes-pointer btn-sound" id="settings-save" style="width:10rem;">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- navbar -->
+    <nav class="nes-container is-rounded is-dark" style="background-color: black;"id="navbar">
+      <div class="nav-section back-button">
+        <button id="back" tabindex="0">
+          <img id="back-button-img" class="nes-pointer btn-sound" src="../assets/images/back_default.png" style="width:3rem;" alt="back">
+        </button>
+      </div>
+      <div class="nav-section nav-title">
+        <a href="index.html" style="position:relative;width:100%;">
+            <span style="color:#edc13a;font-family:'KongText';font-size:3rem;position:absolute;top:-1rem;left:1rem;right:1rem;">CODE EXPRESSO</span>
+        </a>
+      </div>
+      <div class="nav-section nav-buttons">
+        <button id="profile" tabindex="0">
+          <img id="profile-button-img" class="nes-pointer btn-sound" src="../assets/images/profile_default.png" style="width:3rem;" alt="profile">
+        </button>
+        <button id="settings" tabindex="0">
+          <img id="settings-button-img" class="nes-pointer btn-sound" src="../assets/images/settings_default.png" style="width:3rem;" alt="settings">
+        </button>
+      </div>
+    </nav>    
+    
+    <main class="nes-container is-rounded is-dark with-title" style="background-color: #121212;width: 100%;" id="content">
+      <p class="title" style="background:black;">Activate</p>
+        <form method="post" style="height:40rem;width:45rem;position:relative;transform-style: preserve-3d;">
+            <h1 style="font-size:1.5rem;margin:2rem 0 0.5rem 0;">Activate</h1>
+            <div style="margin-bottom:1rem;">
+                <input type="password" class="txtbox" placeholder="Password" name="password" autocomplete="current-password" required="" id="id_password" 
+                style="font-size:2rem; position:relative; z-index: 1;"/>
+                <!-- <i class="far fa-eye" id="togglePassword" style="font-size:2rem; position:absolute; z-index: 3; 
+                margin-left: -3rem; margin-top: 0.5rem;"></i> -->
+            </div>
+            <div style="margin-bottom:1rem;">
+                <input type="password" class="txtbox" placeholder="Confirm Password" name="password2" autocomplete="current-password" required="" id="id_password2" 
+                style="font-size:2rem; position:relative; z-index: 1;"/>
+                <!-- <i class="far fa-eye" id="togglePassword2" style="font-size:2rem; position:absolute; z-index: 3; 
+                margin-left: -3rem; margin-top: 0.5rem;"></i> -->
+            </div>
+            
+            <h2 id="passStrength" style="margin:0;font-family:'VT323','sans-serif';">Password Strength:</h2>
+            <progress id="passwordScore" class="nes-progress is-success" value="0" max="100" style='border-image-source: url("data:image/svg+xml;utf8,<?xml version=\"1.0\" encoding=\"UTF-8\" ?><svg version=\"1.1\" width=\"5\" height=\"5\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z\" fill=\"rgb(33,37,41)\" /></svg>");
+              background-color: #fff; width: 97.5%;'></progress>
+        
+            
+            <h2 id="passLength" style="margin:1rem 0 0;font-family:'VT323','sans-serif';">> Password must be at least 8 characters</h2>
+            <h2 id="passLower" style="margin:0.3rem 0 0;font-family:'VT323','sans-serif';">> Password must have a lowercase character</h2>
+            <h2 id="passUpper" style="margin:0.3rem 0 0;font-family:'VT323','sans-serif';">> Password must have an uppercase character</h2>
+            <h2 id="passNumber" style="margin:0.3rem 0 0;font-family:'VT323','sans-serif';">> Password must have a number</h2>
+            <h2 id="passSpecial" style="margin:0.3rem 0 0;font-family:'VT323','sans-serif';">> Password must have a special character</h2>
+            <div style="width:100%;display:grid;justify-content:center;margin-top:2rem;">
+              <button type="submit" class="nes-btn btn-sound">Activate</button>
+            </div>
+            
+            <div class="form-shadow" style="height:40rem;width:45rem;filter: brightness(80%);position:absolute;top:-1.7rem;left:0.3rem;transform: translateZ(-10px)">
+            </div>
+        </form>
+    </main>
+
+  </body>
+
+</html>

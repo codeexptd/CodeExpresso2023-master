@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CodeExpresso</title>
+    
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+    <link rel="manifest" href="../favicon/site.webmanifest">
+    <link rel="mask-icon" href="../favicon/safari-pinned-tab.svg" color="#5bbad5">
+
+  </head>
+
+  <body>
+    <!-- toast -->
+    <div id="toastsContainer" style="position: fixed; top: 8rem; right: 0; z-index:200;">
+      
+    </div>
+
+    <!-- audio -->
+    <div id="audioContainer" style="display:none";>
+
+    </div>
+    
+    <!-- Settings Modal -->
+    <div class="modal fade custom" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h3 class="modal-title" id="exampleModalLongTitle">Settings</h3>
+          </div>
+          <div class="modal-body border-0">
+            <h4 style="margin-bottom: 1rem;">Music</h4>
+            <div class="d-flex justify-content-center">
+              <input class="nes-pointer" id="musicVolume" type="range" min="0" max="100" step="1" value="90" style="margin-bottom: 2rem;"/>
+            </div>
+            
+            <h4 style="margin-bottom: 1rem;">Sound Effects</h4>
+            <div class="d-flex justify-content-center">
+              <input class="nes-pointer" id="sfxVolume" type="range" min="0" max="100" step="1" value="getVolume('CESFXvolume')" style="margin-bottom: 1rem;"/>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="nes-btn is-primary nes-pointer btn-sound" id="settings-save" style="width:10rem;">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- navbar -->
+    <nav class="nes-container is-rounded is-dark" style="background-color: black;"id="navbar">
+      <div class="nav-section back-button">
+        <button id="back" tabindex="0">
+          <img id="back-button-img" class="nes-pointer btn-sound" src="../assets/images/back_default.png" style="width:3rem;" alt="back">
+        </button>
+      </div>
+      <div class="nav-section nav-title">
+        <a href="index.html" style="position:relative;width:100%;">
+            <span style="color:#edc13a;font-family:'KongText';font-size:3rem;position:absolute;top:-1rem;left:1rem;right:1rem;">CODE EXPRESSO</span>
+        </a>
+      </div>
+      <div class="nav-section nav-buttons">
+        <button id="profile" tabindex="0">
+          <img id="profile-button-img" class="nes-pointer btn-sound" src="../assets/images/profile_default.png" style="width:3rem;" alt="profile">
+        </button>
+        <button id="settings" tabindex="0">
+          <img id="settings-button-img" class="nes-pointer btn-sound" src="../assets/images/settings_default.png" style="width:3rem;" alt="settings">
+        </button>
+      </div>
+    </nav>
+    
+    <main class="nes-container is-rounded is-dark with-title" style="background-color: black;width: 100%;" id="content">
+      <p class="title" style="background:black;">Password Reset</p>
+
+        <form method="post" style="height:30rem;position:relative;transform-style: preserve-3d;">
+            <h1 style="margin-top:1rem;font-size:1.5rem;">Password Reset</h1>
+            
+            <div style="margin-bottom:2rem;position: relative;">
+                <input type="email" class="txtbox" id="email" placeholder="Email" required="" style="font-size:2rem;position: relative;z-index: 2;"/>
+            </div>
+            
+            <h2 style="text-align:center;margin-bottom: 3rem;font-family:'VT323','sans-serif';">A verification email will be sent to your email address to reset your password</h2>
+
+            <button type="submit" class="nes-btn nes-pointer btn-sound" style="height:2.5rem;width:99%;margin-top:1rem;font-size:1.1rem;position:relative;" id="login">
+              <span style="margin:0;position:absolute;top:0.1rem;left:1rem;right:1rem;font-family:'KongText';">Submit</span>
+            </button><br>
+            <h2 style="text-align:center;margin-bottom:4rem;font-family:'VT323','sans-serif';">Already have an account? 
+              <a href="login.html">Login</a>
+            </h2>
+            
+            <div class="form-shadow" style="height:30rem;filter: brightness(80%);position:absolute;top:-1.7rem;left:0.3rem;transform: translateZ(-10px)">
+            </div>
+        </form>
+        
+    </main>
+
+    <!-- <main id="content">
+        <form method="post">
+            <h1 style="font-size:3rem;margin:2rem 0 0 0;">RESET PASSWORD</h1>
+            <div style="margin-bottom:1rem;position: relative;">
+                <div class="errorDiv" id="errorDiv" style="width: 15rem;margin-left: auto; margin-right: 1rem;position: absolute;z-index: 1;right: 0;top:-1.4rem">
+                    <img class='errorBot' src = "../assets/images/center.svg" alt="google icon"/>
+                    <div class='errorBotSpeech'style="position: relative;margin:0 0 0 0.8rem;display:inline-block;width:11rem;">
+                        <h3 style="margin:0;text-align: center;color:white;"><spans style="color:#F72119">error:</spans> invalid email</h3>
+                    </div>
+                </div>
+                <input type="text" class="txtbox" id="email" placeholder="Email" style="font-size:2rem;margin-bottom:1rem;position: relative;z-index: 2;" />
+            </div>
+            <h2 style="text-align:center;margin-bottom: 0;">A verification email will be sent to your email address</h2>
+            <h2 style="text-align:center;margin-top: 0;">to reset your password</h2>
+        
+            <button type="submit" class="loginbuttons"style="margin-top:1rem;font-family: 'VT323', sans-serif;"id="reset">RESET PASSWORD</button><br>
+            <h2 style="text-align:center;margin-bottom:4rem;">Already have an account? 
+                <a href="login.html">Login</a>
+            </h2>
+        </form>
+    </main> -->
+
+  </body>
+  <!-- <script src="../src/essentials.js" defer></script> -->
+  <!-- <script src="../src/errorBot.js" defer></script> -->
+</html>

@@ -1,0 +1,53 @@
+main{
+    width: 98%;
+}
+
+.topics{
+    width: 95%;
+    margin-bottom: 2rem;
+}
+
+.topicsButtons{
+    display: flex;
+    gap: 2rem;
+}
+
+.topicsButtons > button{
+    flex-basis: calc(100%/3);
+    width: 100%;
+}
+
+button{
+    background-color: var(--mainColor);
+    color: black;
+    font-family: var(--mainFont);
+}
+
+button.menu{
+    height: 4rem;
+    width: 33%;
+    border: none;
+    font-size: 3rem;
+    -webkit-box-shadow:inset -6px -6px 0 0 var(--darkColor);
+    box-shadow:inset -6px -6px 0 0 var(--darkColor);
+    transition: all 0.1s ease;
+}
+
+button.menu:hover{
+    cursor: pointer;
+    filter: brightness(0.95);
+    -webkit-box-shadow:inset -8px -8px 0 0 var(--darkColor);
+    box-shadow:inset -8px -8px 0 0 var(--darkColor);
+}
+
+button.menu:active{
+    background-color: var(--mainColor);
+    -webkit-box-shadow:inset 6px 6px 0 0 var(--darkColor);
+    box-shadow:inset 6px 6px 0 0 var(--darkColor);
+}
+
+button.menu:disabled{
+    cursor: default;
+    pointer-events: none;
+    filter: brightness(0.7);
+}
