@@ -457,7 +457,9 @@ function createGame(userSkin) {
     ];
 
     // TILES
-    const level = challenge.map ? JSON.parse(challenge.map) : initMap;
+    const level = challenge.map
+      ? JSON.parse(challenge.map.replaceAll(";", ""))
+      : initMap;
 
     // When loading from an array, make sure to specify the tileWidth and tileHeight
     map = this.make.tilemap({ data: level, tileWidth: 32, tileHeight: 32 });
