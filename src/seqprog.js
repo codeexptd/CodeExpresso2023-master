@@ -64,7 +64,6 @@ const tiles = await getTiles(cat, diff);
 
 const grid = document.getElementById("grid-tiles");
 
-
 //getUnlocked
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -74,11 +73,13 @@ onAuthStateChanged(auth, async (user) => {
       let unlockedLevels = [];
       let completedLevels = await getCompletedLevels(docSnap, cat);
 
-      completedLevels = completedLevels.map((lvl) => {
-        return trimCategoryLvl(diff, lvl);
-      }).filter((lvl) => lvl != undefined || lvl != null);
+      completedLevels = completedLevels
+        .map((lvl) => {
+          return trimCategoryLvl(diff, lvl);
+        })
+        .filter((lvl) => lvl != undefined || lvl != null);
 
-      unlockedLevels = [...completedLevels] // we copy all completed
+      unlockedLevels = [...completedLevels]; // we copy all completed
 
       //if we have no completed levels yet we unlock the 1st level by default
       if (completedLevels.length <= 0) {
@@ -97,13 +98,13 @@ onAuthStateChanged(auth, async (user) => {
 
       tiles
         .sort((a, b) => a - b)
-        .map((tile) => {
-
+        .map((tile, idx) => {
           if (unlockedLevels.includes(tile)) {
             grid.innerHTML += `<div style="display:grid;align-items:center;justify-content:center;">
                 <button
-                class="${unlockedLevels.includes(tile) ? "" : "is-disabled"
-              } nes-btn level-select btn-sound" data-level=${tile} style="height:5rem;width:5rem;font-size: 2rem; display: flex;
+                class="${
+                  unlockedLevels.includes(tile) ? "" : "is-disabled"
+                } nes-btn level-select btn-sound" data-level=${tile} style="height:5rem;width:5rem;font-size: 2rem; display: flex;
     align-items: center;
     justify-content: center;">${tile}</button>
             </div>`;
@@ -111,15 +112,14 @@ onAuthStateChanged(auth, async (user) => {
             grid.innerHTML += `<div style="display:grid;align-items:center;justify-content:center;">
                 <button
                 disabled=true
-                class="${unlockedLevels.includes(tile) ? "" : "is-disabled"
-              } nes-btn level-select btn-sound" data-level=${tile} style="height:5rem;width:5rem;font-size: 2rem; display: flex;
+                class="${
+                  unlockedLevels.includes(tile) ? "" : "is-disabled"
+                } nes-btn level-select btn-sound" data-level=${tile} style="height:5rem;width:5rem;font-size: 2rem; display: flex;
     align-items: center;
     justify-content: center;">${tile}</button>
             </div>`;
           }
         });
-      
-      
     }
     const levelSelect = document.getElementsByClassName("level-select");
     for (let index = 0; index < levelSelect.length; index++) {
@@ -140,8 +140,8 @@ onAuthStateChanged(auth, async (user) => {
         }
       });
     }
-    
-addSoundEffect("btn-sound");
+
+    addSoundEffect("btn-sound");
   }
 });
 

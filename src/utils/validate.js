@@ -46,7 +46,7 @@ export const isUserUnlockedLevel = async (cat, diff, level) => {
         }
 
         console.log("HIT1");
-        //location.href = "levels.html"
+        location.href = "levels.html";
       }
     } else {
     }

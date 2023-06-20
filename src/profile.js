@@ -545,7 +545,7 @@ function generateReportPDF(user, docSnapUser){
     // user info
     doc.setFontSize(12);
     doc.setLineHeightFactor(1.5);
-    console.log(docSnapUser.data());
+    //console.log(docSnapUser.data());
     let username = docSnapUser.data().username;
     doc.text(username+"\n"+user.email, 1, 2);
 

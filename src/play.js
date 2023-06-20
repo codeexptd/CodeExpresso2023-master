@@ -101,8 +101,9 @@ export const getDiffRef = (diffString) => {
 };
 
 async function codeEditor() {
-  await isExistingLevel(cat, diff, levelURL);
-  await isUserUnlockedLevel(cat, diff, levelURL);
+  //intensive readings
+  /* await isExistingLevel(cat, diff, levelURL);
+  await isUserUnlockedLevel(cat, diff, levelURL); */
 
   challenge = await getChallenge(cat, levelURL, diff);
   content.innerHTML = challenge.content;
@@ -432,8 +433,8 @@ function createGame(userSkin) {
     // set the player sprite to collide with the bounds of the physics world
     player.setCollideWorldBounds(true);
 
-    // TILES
-    const level = [
+    //init map
+    const initMap = [
       [1, 4, 4, 4, 4, 4, 4, 4, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [4, 7, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -454,6 +455,9 @@ function createGame(userSkin) {
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ];
+
+    // TILES
+    const level = challenge.map ? JSON.parse(challenge.map) : initMap;
 
     // When loading from an array, make sure to specify the tileWidth and tileHeight
     map = this.make.tilemap({ data: level, tileWidth: 32, tileHeight: 32 });
@@ -897,9 +901,11 @@ async function rewardPlayer(amount, level) {
   });
 }
 
-
 const validateAnswer = (userAnswer) => {
-  if (trimWhitespace(userAnswer) === trimWhitespace(challenge.answer)) return true;
+  if (trimWhitespace(userAnswer) === trimWhitespace(challenge.answer))
+    return true;
   levelFailedModal.toggle();
   return false;
-}
+};
+
+
