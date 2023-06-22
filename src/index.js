@@ -2,11 +2,11 @@ import { addAllNavbarAnimations, addAllNavbarFunctionality, addProfileButtonFunc
 import { getAudioSrc, addAudioElementToBody, addSoundEffect} from './general/audioEssentials';
 
 import { auth, getUserTheme, addProfileButtonFunc } from './firebase/userEssentials';
-import { onAuthStateChanged } from 'firebase/auth';
-import { setCookie, getCookie } from './general/cookies';
+
+import { setCookie, getCookie } from "./general/cookies";
 
 // css
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import "nes.css/css/nes.min.css";
 import "../styles/essentials.css";
 import "../styles/login.css";
@@ -15,6 +15,12 @@ import "../styles/login.css";
 import fantasyBG from "../assets/themes/fantasy.svg";
 import tropicalBG from "../assets/themes/tropical.svg";
 import coffeeBG from "../assets/themes/coffee.svg";
+import {
+  getAuth,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  updatePassword,
+} from "firebase/auth";
 
 onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -108,8 +114,15 @@ let levelsButton = document.getElementsByClassName("levels");
 for (let index = 0; index < levelsButton.length; index++) {
     const element = levelsButton[index];
     element.addEventListener('click', (e) => {
-        setTimeout(function() {
-            location.href = "levels.html";
-        }, 300);
+        onAuthStateChanged(getAuth(), (user) => {
+          if (user) {
+            setTimeout(function () {
+              location.href = "levels.html";
+            }, 300);
+          } else {
+            location.href = "login.html";
+          }
+        });
+      
     });
 }

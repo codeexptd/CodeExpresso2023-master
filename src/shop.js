@@ -2,6 +2,7 @@ import { addAllNavbarAnimations, addAllNavbarFunctionality, addProfileButtonFunc
 import { getAudioSrc, addAudioElementToBody, addSoundEffect} from './general/audioEssentials';
 import { auth, db, checkForBadges, loginWithGoogle, loginWithEmailAndPassword, createDefaultGoogleUser } from './firebase/userEssentials';
 
+import { isLoggedIn } from "./utils/utils";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, doc, getDoc, collection, getDocs, setDoc, updateDoc } from 'firebase/firestore';
@@ -18,6 +19,7 @@ import "../styles/login.css";
 
 // ********** ESSENTIALS **********
 // essentials
+isLoggedIn();
 addAllNavbarAnimations();
 addAllNavbarFunctionality();
 

@@ -11,6 +11,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { getTiles } from './utils/utils';
 import { Modal, Toast } from 'bootstrap';
 import $ from 'jquery';
+import { isLoggedIn } from "./utils/utils";
 import { Categories } from './utils/categories';
 // css
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,6 +25,7 @@ import eye_icon_hide from "../assets/images/eye_icon_hide.png";
 
 // ********** ESSENTIALS **********
 // essentials
+isLoggedIn();
 addAllNavbarAnimations();
 addAllNavbarFunctionality();
 

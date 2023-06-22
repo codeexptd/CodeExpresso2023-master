@@ -5,15 +5,16 @@ import { auth, sendPasswordReset } from './firebase/userEssentials';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { validateEmail } from './errorBot';
-
+import { isWhileLoggedIn } from "./utils/utils";
 // css
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import "nes.css/css/nes.min.css";
 import "../styles/essentials.css";
 import "../styles/login.css";
- 
+
 // ********** ESSENTIALS **********
 // essentials
+isWhileLoggedIn();
 addAllNavbarAnimations();
 addAllNavbarFunctionality();
 

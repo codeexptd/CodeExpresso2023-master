@@ -43,7 +43,7 @@ import bunnybot from "../assets/gameImages/bunny_bot_spritesheet.png";
 import catbanana from "../assets/gameImages/cat_banana_spritesheet.png";
 import catbot2 from "../assets/gameImages/cat_bot2_spritesheet.png";
 import catbot from "../assets/gameImages/cat_bot_spritesheet.png";
-
+import { isLoggedIn } from "./utils/utils";
 // ********** ESSENTIALS **********
 // essentials
 addAllNavbarAnimations();
@@ -83,6 +83,9 @@ const subtitle = document.getElementById("subtitle");
 let isWinner = false;
 
 let challenge = {};
+
+//Check if loggedIn
+isLoggedIn();
 
 // -------------------------------------
 
@@ -168,7 +171,7 @@ async function codeEditor() {
       url: "https://onecompiler-apis.p.rapidapi.com/api/v1/run",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": "b73b411cc0mshd35f69dd29dd737p115fa0jsn4b3e3be739c5",
+        "X-RapidAPI-Key": "09b1f369a1mshd431f7b188ad169p11d508jsn85863c175756",
         "X-RapidAPI-Host": "onecompiler-apis.p.rapidapi.com",
       },
       data: {
@@ -203,7 +206,7 @@ async function codeEditor() {
         "content-type": "application/json",
         "x-compile": "rapidapi",
         "Content-Type": "application/json",
-        "X-RapidAPI-Key": "b73b411cc0mshd35f69dd29dd737p115fa0jsn4b3e3be739c5",
+        "X-RapidAPI-Key": "09b1f369a1mshd431f7b188ad169p11d508jsn85863c175756",
         "X-RapidAPI-Host": "code-compiler10.p.rapidapi.com",
       },
       data: {
@@ -249,7 +252,7 @@ async function codeEditor() {
       url: "https://online-code-compiler.p.rapidapi.com/v1/",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": "b73b411cc0mshd35f69dd29dd737p115fa0jsn4b3e3be739c5",
+        "X-RapidAPI-Key": "09b1f369a1mshd431f7b188ad169p11d508jsn85863c175756",
         "X-RapidAPI-Host": "online-code-compiler.p.rapidapi.com",
       },
       data: {
@@ -278,7 +281,7 @@ async function codeEditor() {
       url: "https://java-code-compiler.p.rapidapi.com/",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": "b73b411cc0mshd35f69dd29dd737p115fa0jsn4b3e3be739c5",
+        "X-RapidAPI-Key": "09b1f369a1mshd431f7b188ad169p11d508jsn85863c175756",
         "X-RapidAPI-Host": "java-code-compiler.p.rapidapi.com",
       },
       data: {

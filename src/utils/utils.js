@@ -11,7 +11,12 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/userEssentials";
 import { Categories } from "./categories";
-
+import {
+  getAuth,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  updatePassword,
+} from "firebase/auth";
 export const getChallenge = async (category, level, difficulty) => {
   //we need to validate these!
   if (!level && !category && !difficulty) {
@@ -277,4 +282,26 @@ export const incrementDifficulty = (diff) => {
   } else {
     return null;
   }
+};
+
+export const isLoggedIn = () => {
+  onAuthStateChanged(getAuth(), (user) => {
+    if (user) {
+      return true;
+    } else {
+      location.href = "login.html";
+      return false;
+    }
+  });
+};
+
+export const isWhileLoggedIn = () => {
+  onAuthStateChanged(getAuth(), (user) => {
+    if (user) {
+      location.href = "profile.html";
+      return true;
+    } else {
+      return false;
+    }
+  });
 };

@@ -8,7 +8,7 @@ import { getAudioSrc, addAudioElementToBody, addSoundEffect} from './general/aud
 import { auth } from './firebase/userEssentials';
 
 import { onAuthStateChanged, sendSignInLinkToEmail } from "firebase/auth";
-
+import { isWhileLoggedIn } from "./utils/utils";
 import { validateEmail } from './errorBot';
 
 // css
@@ -27,6 +27,7 @@ var actionCodeSettings = {
 
 // ********** ESSENTIALS **********
 // essentials
+isWhileLoggedIn();
 addAllNavbarAnimations();
 addAllNavbarFunctionality();
 

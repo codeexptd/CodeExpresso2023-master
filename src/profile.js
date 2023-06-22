@@ -5,7 +5,7 @@ import { auth, db, signOutUser, checkForBadges } from './firebase/userEssentials
 import { onAuthStateChanged, signOut, multiFactor, getMultiFactorResolver, PhoneAuthProvider, PhoneMultiFactorGenerator, RecaptchaVerifier, reauthenticateWithCredential, EmailAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import { doc, getDoc, getDocs, collection, setDoc, updateDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
+import { isLoggedIn } from './utils/utils';
 import { Modal, Toast } from 'bootstrap';
 import $, { error } from 'jquery';
 
@@ -21,6 +21,7 @@ import defaultPic from "../assets/images/default_profile_pic.png"
 
 // ********** ESSENTIALS **********
 // essentials
+isLoggedIn();
 addAllNavbarAnimations();
 addAllNavbarFunctionality();
 

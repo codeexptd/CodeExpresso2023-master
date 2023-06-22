@@ -1,7 +1,7 @@
 import { addAllNavbarAnimations, addAllNavbarFunctionality, addProfileButtonFunctionality, displayToast } from './general/essentials';
 import { getAudioSrc, addAudioElementToBody, addSoundEffect} from './general/audioEssentials';
 import { auth, loginWithGoogle, loginWithEmailAndPassword, createDefaultGoogleUser } from './firebase/userEssentials';
-
+import { isWhileLoggedIn } from "./utils/utils";
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { Modal, Toast } from 'bootstrap';
@@ -19,6 +19,7 @@ import eye_icon_hide from "../assets/images/eye_icon_hide.png";
 
 // ********** ESSENTIALS **********
 // essentials
+isWhileLoggedIn();
 addAllNavbarAnimations();
 addAllNavbarFunctionality();
 

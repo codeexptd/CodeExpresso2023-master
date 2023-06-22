@@ -14,20 +14,22 @@ import { setCookie, getCookie } from './general/cookies';
 import { filterByDifficulty } from './utils/utils';
 import { getAllTotalLevels } from './utils/utils';
 import { getDifficultyPanel } from './utils/utils';
+import { isLoggedIn } from "./utils/utils";
 // import { displayNotif, closeNotif } from './general/notifs';
 
 // css
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import "nes.css/css/nes.min.css";
 import "../styles/essentials.css";
 import "../styles/login.css";
-import { Categories } from './utils/categories';
-import { getTilesLength } from './utils/utils';
+import { Categories } from "./utils/categories";
+import { getTilesLength } from "./utils/utils";
 
 // -------------------------------------
 
 // ********** ESSENTIALS **********
 // essentials
+isLoggedIn();
 addAllNavbarAnimations();
 addAllNavbarFunctionality();
 
@@ -35,10 +37,12 @@ addAllNavbarFunctionality();
 // displayToast("Achievement Unlocked", "Great Job!");
 
 // background music
-addAudioElementToBody('background-music', getAudioSrc('mute'));
+addAudioElementToBody("background-music", getAudioSrc("mute"));
 
 // sound effects
 addSoundEffect("btn-sound");
+
+
 
 document.getElementById("profile").addEventListener("click", function(){
     onAuthStateChanged(auth, (user) => {
