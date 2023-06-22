@@ -39,6 +39,7 @@
   "dependencies": {
     "bootstrap": "^5.2.3",
     "clean-webpack-plugin": "^4.0.0",
+    "crypto-js": "^4.1.1",
     "firebase": "^9.15.0",
     "js-beautify": "^1.14.8",
     "jspdf": "^2.5.1",

@@ -15,6 +15,7 @@ import { filterByDifficulty } from './utils/utils';
 import { getAllTotalLevels } from './utils/utils';
 import { getDifficultyPanel } from './utils/utils';
 import { isLoggedIn } from "./utils/utils";
+import { Token } from "./utils/crypt";
 // import { displayNotif, closeNotif } from './general/notifs';
 
 // css
@@ -42,44 +43,45 @@ addAudioElementToBody("background-music", getAudioSrc("mute"));
 // sound effects
 addSoundEffect("btn-sound");
 
+document.getElementById("profile").addEventListener("click", function () {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
 
-
-document.getElementById("profile").addEventListener("click", function(){
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-    
-        addProfileButtonFunctionality(user);
-      } else {
-        addProfileButtonFunctionality(user);
-      }
-    });
+      addProfileButtonFunctionality(user);
+    } else {
+      addProfileButtonFunctionality(user);
+    }
+  });
 });
 
 // -------------------------------------------------
 
-
 const levelSelect = document.getElementsByClassName("level-select");
 for (let index = 0; index < levelSelect.length; index++) {
-    const element = levelSelect[index];
-    element.addEventListener('mouseover', function(){
-        this.style.borderColor = "white";
-    });
-    element.addEventListener('mouseout', function(){
-        this.style.borderColor = "gray";
-    });
-    element.addEventListener('click', function(){
-      var link = this.getAttribute("data-id");
-      var diff = this.getAttribute("data-diff");
-      var cat = this.getAttribute("data-cat");
-      let isDisabled = this.getAttribute("data-disable");
-      if (isDisabled == "isdisabled") {
-        return;
-      } 
-        setTimeout(() => {
-            location.href = `seqprog.html?cat=${cat}&diff=${diff}`;
-        }, 300);
-    });
+  const element = levelSelect[index];
+  element.addEventListener("mouseover", function () {
+    this.style.borderColor = "white";
+  });
+  element.addEventListener("mouseout", function () {
+    this.style.borderColor = "gray";
+  });
+  element.addEventListener("click", function () {
+    var link = this.getAttribute("data-id");
+    var diff = this.getAttribute("data-diff");
+    var cat = this.getAttribute("data-cat");
+    let isDisabled = this.getAttribute("data-disable");
+    if (isDisabled == "isdisabled") {
+      return;
+    }
+    const token = new Token(cat, diff, null, null);
+    const encrypted = Token.encrypt(JSON.stringify(token));
+
+    setTimeout(() => {
+      /* location.href = `seqprog.html?cat=${cat}&diff=${diff}`; */
+      location.href = `seqprog.html?token=${encodeURIComponent(encrypted)}`;
+    }, 300);
+  });
 }
 
 //Check if we already unlocked the medium, and hard per category

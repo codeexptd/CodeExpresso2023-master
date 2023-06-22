@@ -13,8 +13,9 @@ import { Modal, Toast } from 'bootstrap';
 import $ from 'jquery';
 import { isLoggedIn } from "./utils/utils";
 import { Categories } from './utils/categories';
+import { Token } from "./utils/crypt";
 // css
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import "nes.css/css/nes.min.css";
 import "../styles/essentials.css";
 import "../styles/login.css";
@@ -33,15 +34,13 @@ addAllNavbarFunctionality();
 // displayToast("Achievement Unlocked", "Great Job!");
 
 // background music
-addAudioElementToBody('background-music', getAudioSrc('mute'));
+addAudioElementToBody("background-music", getAudioSrc("mute"));
 
-
-
-document.getElementById("profile").addEventListener("click", function(){
+document.getElementById("profile").addEventListener("click", function () {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
-  
+
       addProfileButtonFunctionality(user);
     } else {
       addProfileButtonFunctionality(user);
@@ -53,16 +52,26 @@ document.getElementById("profile").addEventListener("click", function(){
 
 //URL Search params
 const urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get("token");
+let decrypted = "";
+try {
+  decrypted = JSON.parse(Token.decrypt(decodeURIComponent(token)));
+} catch (e) {
+  location.href = "index.html";
+}
+const cat = decrypted.cat;
+const diff = decrypted.diff;
 
-const cat = urlParams.get("cat");
-const diff = urlParams.get("diff");
+if (!cat || !diff || !decrypted) {
+  location.href = "index.html";
+}
 
 const title = document.getElementById("title");
 
-
-title.innerHTML = `${Object.values(Categories).find((c) => c.name == cat).title} - ${diff.charAt(0).toUpperCase() + diff.slice(1)}`;
+title.innerHTML = `${
+  Object.values(Categories).find((c) => c.name == cat).title
+} - ${diff.charAt(0).toUpperCase() + diff.slice(1)}`;
 const tiles = await getTiles(cat, diff);
-
 
 const grid = document.getElementById("grid-tiles");
 
@@ -121,6 +130,9 @@ onAuthStateChanged(auth, async (user) => {
     justify-content: center;">${tile}</button>
             </div>`;
           }
+          if (idx === length) {
+            document.getElementById("container").remove();
+          }
         });
     }
     const levelSelect = document.getElementsByClassName("level-select");
@@ -134,10 +146,11 @@ onAuthStateChanged(auth, async (user) => {
       });
       element.addEventListener("click", function () {
         var level = this.getAttribute("data-level");
-
+        const token = new Token(cat, diff, level, null);
+        const encrypted = Token.encrypt(JSON.stringify(token));
         if (!element.disabled) {
           setTimeout(() => {
-            location.href = `play.html?cat=${cat}&diff=${diff}&level=${level}`;
+            location.href = `play.html?token=${encodeURIComponent(encrypted)}`;
           }, 300);
         }
       });

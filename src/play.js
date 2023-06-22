@@ -30,6 +30,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "nes.css/css/nes.min.css";
 import "../styles/essentials.css";
 import "../styles/profile.css";
+import { Token } from "./utils/crypt";
 // import "../styles/game.css";
 
 // Phaser
@@ -72,10 +73,22 @@ document.getElementById("profile").addEventListener("click", function () {
 
 // ----------- INSERTED ------------ v1.0
 const urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get("token");
 
-const cat = urlParams.get("cat");
-const diff = urlParams.get("diff");
-const levelURL = urlParams.get("level");
+let decrypted = "";
+try {
+  decrypted = JSON.parse(Token.decrypt(decodeURIComponent(token)));
+} catch (e) {
+  location.href = "index.html";
+}
+
+const cat = decrypted.cat;
+const diff = decrypted.diff;
+const levelURL = decrypted.level;
+
+if (!cat || !diff || !decrypted || !levelURL) {
+  location.href = "index.html";
+}
 
 const content = document.getElementById("content");
 const subtitle = document.getElementById("subtitle");
