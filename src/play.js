@@ -843,11 +843,22 @@ async function getNextLevel() {
 
     let newDiff = incrementDifficulty(diff);
     let newLevel = 1;
-    return `play.html?cat=${cat}&diff=${newDiff}&level=${newLevel}`;
+
+    const token = new Token(cat, newDiff, newLevel, null);
+    const encrypted = Token.encrypt(JSON.stringify(token));
+
+    /* return `play.html?cat=${cat}&diff=${newDiff}&level=${newLevel}`; */
+    return `play.html?token=${encodeURIComponent(encrypted)}`;
   }
-  return `play.html?cat=${cat}&diff=${diff}&level=${String(
+  /* return `play.html?cat=${cat}&diff=${diff}&level=${String(
     parseInt(levelURL) + 1
-  )}`;
+  )}`; */
+
+  let incrementedLevel = String(parseInt(levelURL) + 1);
+  const token = new Token(cat, diff, incrementedLevel, null);
+  const encrypted = Token.encrypt(JSON.stringify(token));
+
+  return `play.html?token=${encodeURIComponent(encrypted)}`;
 }
 
 document
